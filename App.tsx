@@ -11,15 +11,25 @@ import {
   StatusBar,
   StyleSheet,
   useColorScheme,
-  SafeAreaView,
   Alert,
+  Text,
+  TouchableOpacity,
+  AppState,
+  SafeAreaView,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import Geolocation from '@react-native-community/geolocation';
+import SplashScreen from 'react-native-splash-screen';
+import NetInfo from '@react-native-community/netinfo';
+import LottieView from 'lottie-react-native';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
   const [locationPermission, setLocationPermission] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const [isConnected, setIsConnected] = useState(true);
+  const [appState, setAppState] = useState(AppState.currentState);
 
   const requestLocationPermission = useCallback(async () => {
     try {
@@ -44,6 +54,43 @@ function App() {
   useEffect(() => {
     requestLocationPermission();
   }, [requestLocationPermission]);
+
+  // 스플래시 스크린 즉시 숨기기
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
+  // 네트워크 연결 상태 모니터링
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsConnected(state.isConnected ?? false);
+      if (state.isConnected && hasError) {
+        // 네트워크가 복구되면 에러 상태만 해제
+        // WebView는 새로고침하지 않아서 로컬스토리지 유지
+        setHasError(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [hasError]);
+
+  // 앱 상태 변화 감지
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState: any) => {
+      if (appState.match(/inactive|background/) && nextAppState === 'active') {
+        // 앱이 백그라운드에서 포그라운드로 돌아올 때 에러 상태만 초기화
+        // WebView는 새로고침하지 않아서 로컬스토리지 유지
+        setHasError(false);
+      }
+      setAppState(nextAppState);
+    };
+
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
+    return () => subscription?.remove();
+  }, [appState]);
 
   const requestLocationPermissionWithGeolocation = async () => {
     return new Promise(resolve => {
@@ -174,6 +221,53 @@ function App() {
 
   const webViewRef = React.useRef<WebView>(null);
 
+  // WebView 로딩 완료 핸들러
+  const handleWebViewLoadEnd = () => {
+    setIsLoading(false);
+    setHasError(false);
+  };
+
+  // WebView 에러 핸들러
+  const handleWebViewError = () => {
+    setIsLoading(false);
+    setHasError(true);
+  };
+
+  // 재시도 함수
+  const handleRetry = () => {
+    setHasError(false);
+    setIsLoading(true);
+    // WebView를 완전히 새로고침하지 않고 현재 페이지만 새로고침
+    webViewRef.current?.reload();
+  };
+
+  // 로딩 화면
+  const renderLoadingScreen = () => (
+    <View style={styles.loadingContainer}>
+      <LottieView
+        source={require('./assets/loading/loading.json')}
+        autoPlay
+        loop
+        style={styles.lottieAnimation}
+      />
+    </View>
+  );
+
+  // 에러 화면
+  const renderErrorScreen = () => (
+    <View style={styles.errorContainer}>
+      <Text style={styles.errorTitle}>연결에 실패했습니다</Text>
+      <Text style={styles.errorMessage}>
+        {!isConnected
+          ? '인터넷 연결을 확인해주세요.'
+          : '페이지를 불러올 수 없습니다.'}
+      </Text>
+      <TouchableOpacity style={styles.retryButton} onPress={handleRetry}>
+        <Text style={styles.retryButtonText}>다시 시도</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <StatusBar
@@ -181,61 +275,79 @@ function App() {
         backgroundColor="transparent"
         translucent={true}
       />
-      {/* <SafeAreaView style={styles.topSafeArea} /> */}
+      <SafeAreaView style={styles.topSafeArea} />
       <View style={styles.webviewContainer}>
-        <WebView
-          ref={webViewRef}
-          source={{ uri: 'https://ra-ising.com' }}
-          style={styles.webview}
-          javaScriptEnabled={true}
-          domStorageEnabled={true}
-          startInLoadingState={true}
-          scalesPageToFit={true}
-          allowsInlineMediaPlayback={true}
-          mediaPlaybackRequiresUserAction={false}
-          allowsBackForwardNavigationGestures={true}
-          userAgent="Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1"
-          onMessage={handleWebViewMessage}
-          injectedJavaScript={`
-            // 웹뷰에서 geolocation 요청을 앱으로 전달하는 코드
-            (function() {
-              const originalGetCurrentPosition = navigator.geolocation.getCurrentPosition;
-              const originalWatchPosition = navigator.geolocation.watchPosition;
-              
-              navigator.geolocation.getCurrentPosition = function(success, error, options) {
-                // 앱에 위치 요청 메시지 전송
-                window.ReactNativeWebView.postMessage(JSON.stringify({
-                  type: 'REQUEST_LOCATION'
-                }));
-                
-                // 기존 요청을 저장해두고 나중에 실행
-                if (!window.pendingGeolocationRequests) {
-                  window.pendingGeolocationRequests = [];
-                }
-                window.pendingGeolocationRequests.push({ success, error, options });
-              };
-              
-              navigator.geolocation.watchPosition = function(success, error, options) {
-                // watchPosition도 동일하게 처리
-                window.ReactNativeWebView.postMessage(JSON.stringify({
-                  type: 'REQUEST_LOCATION'
-                }));
-                
-                if (!window.pendingGeolocationRequests) {
-                  window.pendingGeolocationRequests = [];
-                }
-                window.pendingGeolocationRequests.push({ success, error, options });
-                
-                // watchPosition의 경우 interval ID 반환
-                return setInterval(() => {
-                  window.ReactNativeWebView.postMessage(JSON.stringify({
-                    type: 'REQUEST_LOCATION'
-                  }));
-                }, 1000);
-              };
-            })();
-          `}
-        />
+        {hasError ? (
+          renderErrorScreen()
+        ) : (
+          <>
+            {isLoading && renderLoadingScreen()}
+            <WebView
+              ref={webViewRef}
+              source={{ uri: 'https://ra-ising.com' }}
+              style={styles.webview}
+              javaScriptEnabled={true}
+              domStorageEnabled={true}
+              thirdPartyCookiesEnabled={true}
+              sharedCookiesEnabled={true}
+              cacheEnabled={true}
+              cacheMode="LOAD_DEFAULT"
+              startInLoadingState={false}
+              scalesPageToFit={true}
+              allowsInlineMediaPlayback={true}
+              mediaPlaybackRequiresUserAction={false}
+              allowsBackForwardNavigationGestures={true}
+              userAgent="Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1"
+              onMessage={handleWebViewMessage}
+              onLoadEnd={handleWebViewLoadEnd}
+              onError={handleWebViewError}
+              onHttpError={handleWebViewError}
+              onContentProcessDidTerminate={() => {
+                // 웹뷰 프로세스가 종료되면 자동으로 재로딩
+                webViewRef.current?.reload();
+              }}
+              injectedJavaScript={`
+                // 웹뷰에서 geolocation 요청을 앱으로 전달하는 코드
+                (function() {
+                  const originalGetCurrentPosition = navigator.geolocation.getCurrentPosition;
+                  const originalWatchPosition = navigator.geolocation.watchPosition;
+                  
+                  navigator.geolocation.getCurrentPosition = function(success, error, options) {
+                    // 앱에 위치 요청 메시지 전송
+                    window.ReactNativeWebView.postMessage(JSON.stringify({
+                      type: 'REQUEST_LOCATION'
+                    }));
+                    
+                    // 기존 요청을 저장해두고 나중에 실행
+                    if (!window.pendingGeolocationRequests) {
+                      window.pendingGeolocationRequests = [];
+                    }
+                    window.pendingGeolocationRequests.push({ success, error, options });
+                  };
+                  
+                  navigator.geolocation.watchPosition = function(success, error, options) {
+                    // watchPosition도 동일하게 처리
+                    window.ReactNativeWebView.postMessage(JSON.stringify({
+                      type: 'REQUEST_LOCATION'
+                    }));
+                    
+                    if (!window.pendingGeolocationRequests) {
+                      window.pendingGeolocationRequests = [];
+                    }
+                    window.pendingGeolocationRequests.push({ success, error, options });
+                    
+                    // watchPosition의 경우 interval ID 반환
+                    return setInterval(() => {
+                      window.ReactNativeWebView.postMessage(JSON.stringify({
+                        type: 'REQUEST_LOCATION'
+                      }));
+                    }, 1000);
+                  };
+                })();
+              `}
+            />
+          </>
+        )}
       </View>
     </View>
   );
@@ -244,16 +356,68 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: '#FCFCFC',
   },
   topSafeArea: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#FCFCFC',
   },
   webviewContainer: {
     flex: 1,
   },
   webview: {
     flex: 1,
+  },
+  loadingContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+    zIndex: 1000,
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: '#666',
+  },
+  lottieAnimation: {
+    width: 100,
+    height: 100,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#FFF',
+  },
+  errorTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  errorMessage: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 24,
+    textAlign: 'center',
+    lineHeight: 22,
+  },
+  retryButton: {
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+  },
+  retryButtonText: {
+    color: '#FFF',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
 
