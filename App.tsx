@@ -15,6 +15,7 @@ import {
   Text,
   TouchableOpacity,
   AppState,
+  NativeModules,
   SafeAreaView,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
@@ -22,6 +23,33 @@ import Geolocation from '@react-native-community/geolocation';
 import SplashScreen from 'react-native-splash-screen';
 import NetInfo from '@react-native-community/netinfo';
 import LottieView from 'lottie-react-native';
+
+// 프로덕션 웹 오리진 (스토어/릴리스 빌드는 항상 이걸 로드).
+const PROD_WEB_URL = 'https://ra-ising.com';
+// 로컬 vite dev 서버 포트 (raising-client: vite `host: true` → :5173).
+const DEV_WEB_PORT = 5173;
+
+/**
+ * dev 빌드에서는 로컬 vite 서버를, 그 외엔 프로덕션을 로드한다.
+ * Metro 번들 URL(scriptURL)에서 dev 머신 host만 떼어 포트를 5173으로 바꾸므로
+ * iOS 시뮬레이터(localhost)·Android 에뮬레이터(10.0.2.2)·실기기(LAN IP)에
+ * 별도 설정 없이 자동 대응한다. 추출 실패 시 프로덕션으로 폴백.
+ */
+function resolveWebUrl(): string {
+  if (!__DEV__) {
+    return PROD_WEB_URL;
+  }
+  const scriptURL: string | undefined = (NativeModules.SourceCode as any)
+    ?.scriptURL;
+  const host = scriptURL?.split('://')[1]?.split(/[:/]/)[0];
+  return host ? `http://${host}:${DEV_WEB_PORT}` : PROD_WEB_URL;
+}
+
+const WEB_URL = resolveWebUrl();
+
+if (__DEV__) {
+  console.log('[dev] WebView source =', WEB_URL);
+}
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -284,7 +312,7 @@ function App() {
             {isLoading && renderLoadingScreen()}
             <WebView
               ref={webViewRef}
-              source={{ uri: 'https://ra-ising.com' }}
+              source={{ uri: WEB_URL }}
               style={styles.webview}
               javaScriptEnabled={true}
               domStorageEnabled={true}
