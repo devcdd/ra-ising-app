@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@react-native-async-storage/async-storage':
+        specifier: ^3.1.1
+        version: 3.1.1(react-native@0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0))(react@19.1.0)
+      '@react-native-clipboard/clipboard':
+        specifier: ^1.16.3
+        version: 1.16.3(react-native@0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0))(react@19.1.0)
       '@react-native-community/geolocation':
         specifier: 3.4.0
         version: 3.4.0(react-native@0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0))(react@19.1.0)
@@ -26,6 +32,12 @@ importers:
       react-native:
         specifier: 0.80.2
         version: 0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0)
+      react-native-haptic-feedback:
+        specifier: ^3.0.0
+        version: 3.0.0(react-native@0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0))(react@19.1.0)
+      react-native-safe-area-context:
+        specifier: ^5.8.0
+        version: 5.8.0(react-native@0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0))(react@19.1.0)
       react-native-splash-screen:
         specifier: 3.3.0
         version: 3.3.0(react-native@0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0))
@@ -898,6 +910,25 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@react-native-async-storage/async-storage@3.1.1':
+    resolution: {integrity: sha512-z+PnLz1n6ECKhgoHZHkfc+dijXZEyZnNFSajbtE0NEbsJhmX8x9GlOeiMQIKX2E4DUqPSgfIh4FYBv1M49KgPQ==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+
+  '@react-native-clipboard/clipboard@1.16.3':
+    resolution: {integrity: sha512-cMIcvoZKIrShzJHEaHbTAp458R9WOv0fB6UyC7Ek4Qk561Ow/DrzmmJmH/rAZg21Z6ixJ4YSdFDC14crqIBmCQ==}
+    peerDependencies:
+      react: '>= 16.9.0'
+      react-native: '>= 0.61.5'
+      react-native-macos: '>= 0.61.0'
+      react-native-windows: '>= 0.61.0'
+    peerDependenciesMeta:
+      react-native-macos:
+        optional: true
+      react-native-windows:
+        optional: true
 
   '@react-native-community/cli-clean@20.0.2':
     resolution: {integrity: sha512-hfbC69fTD0fqZCCep8aqnVztBXUhAckNhi76lEV7USENtgBRwNq2s1wATgKAzOhxKuAL9TEkf5TZ/Dhp/YLhCQ==}
@@ -2120,6 +2151,9 @@ packages:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
     engines: {node: '>=0.10.0'}
 
+  idb@8.0.3:
+    resolution: {integrity: sha512-LtwtVyVYO5BqRvcsKuB2iUMnHwPVByPCXFXOpuU96IZPPoPN6xjOGxZQ74pgSVVLQWtUOYgyeL4GE98BY5D3wg==}
+
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
@@ -2978,6 +3012,21 @@ packages:
 
   react-is@19.2.7:
     resolution: {integrity: sha512-kZFnouyVv7eP/Phmrlo9FK+zcAdriZJvzxXHF1Sl1P377WSGe2G/JxVolhTrB/jeV47lKImhNUsijjHAAbcl/A==}
+
+  react-native-haptic-feedback@3.0.0:
+    resolution: {integrity: sha512-yxBQFHhXU8S0xupGtzDRToGw5yMWezUdLzxtlx2Oi9YpjPwprWZWCw8foPt0S2t84B0ZikzZYyOHiMSXIelUxg==}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-native: '>=0.71.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+
+  react-native-safe-area-context@5.8.0:
+    resolution: {integrity: sha512-t+ZsAVzY/wWzzx34vqGbo3/as9EEESJdbyZNL7Yg5EYX+toYMtMqFoDDCvqZUi35eeGVsXc6pAaEk4edMwbuCQ==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
 
   react-native-splash-screen@3.3.0:
     resolution: {integrity: sha512-rGjt6HkoSXxMqH4SQUJ1gnPQlPJV8+J47+4yhgTIan4bVvAwJhEeJH7wWt9hXSdH4+VfwTS0GTaflj1Tw83IhA==}
@@ -4644,6 +4693,17 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.1
 
+  '@react-native-async-storage/async-storage@3.1.1(react-native@0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      idb: 8.0.3
+      react: 19.1.0
+      react-native: 0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0)
+
+  '@react-native-clipboard/clipboard@1.16.3(react-native@0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      react: 19.1.0
+      react-native: 0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0)
+
   '@react-native-community/cli-clean@20.0.2':
     dependencies:
       '@react-native-community/cli-tools': 20.0.2
@@ -6302,6 +6362,8 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
+  idb@8.0.3: {}
+
   ieee754@1.2.1: {}
 
   ignore@5.3.2: {}
@@ -7427,6 +7489,17 @@ snapshots:
   react-is@18.3.1: {}
 
   react-is@19.2.7: {}
+
+  react-native-haptic-feedback@3.0.0(react-native@0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react-native: 0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0)
+    optionalDependencies:
+      react: 19.1.0
+
+  react-native-safe-area-context@5.8.0(react-native@0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-native: 0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0)
 
   react-native-splash-screen@3.3.0(react-native@0.80.2(@babel/core@7.28.0)(@react-native-community/cli@20.0.2(typescript@5.0.4))(@types/react@19.1.9)(react@19.1.0)):
     dependencies:

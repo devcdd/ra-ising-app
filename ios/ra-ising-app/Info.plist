@@ -31,6 +31,15 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>tel</string>
+		<string>mailto</string>
+		<string>nmap</string>
+		<string>kakaomap</string>
+		<string>kakaolink</string>
+		<string>itms-apps</string>
+	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>이 앱은 위치 기반 서비스를 제공하기 위해 위치 정보가 필요합니다.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
