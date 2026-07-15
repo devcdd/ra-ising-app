@@ -1,0 +1,9 @@
+{
+  "id" : "49daaa8b-ee03-4638-9c4b-f3cc045d6b0a",
+  "targets" : [
+    {
+      "id" : "85B9132A-3E25-4467-919E-CC23683D58EA",
+      "name" : "ra-ising-app"
+    }
+  ]
+}

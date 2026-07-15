@@ -8,6 +8,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import { shareFeedTemplate } from '@react-native-kakao/share';
 import {
   BRIDGE_PROTOCOL_VERSION,
   BridgeMethods,
@@ -101,6 +102,33 @@ export const createRpcHandlers = (
       ok: result.action !== Share.dismissedAction,
       dismissed: result.action === Share.dismissedAction,
     };
+  },
+
+  // 카카오 네이티브 SDK 피드 공유 — 웹 카카오 JS SDK는 WebView에서 공유창을 못 띄워 메인으로 튕기므로 네이티브로 처리.
+  // 카카오톡 미설치 시 useWebBrowserIfKakaoTalkNotAvailable로 웹 공유 폴백. App.tsx에서 initializeKakaoSDK 선행 필요.
+  [BridgeMethods.kakaoShare]: async (p) => {
+    const url = String(p?.url ?? '');
+    if (!url) {
+      fail('E_INVALID_PARAMS', 'kakao.share: url이 필요합니다');
+    }
+    const link = { mobileWebUrl: url, webUrl: url };
+    try {
+      await shareFeedTemplate({
+        template: {
+          content: {
+            title: String(p?.title ?? ''),
+            description: p?.description ? String(p.description) : undefined,
+            imageUrl: String(p?.imageUrl ?? ''),
+            link,
+          },
+          buttons: p?.buttonTitle ? [{ title: String(p.buttonTitle), link }] : undefined,
+        },
+        useWebBrowserIfKakaoTalkNotAvailable: true,
+      });
+      return { ok: true };
+    } catch (e) {
+      return fail('E_NATIVE', `kakao.share 실패: ${String((e as Error)?.message ?? e)}`);
+    }
   },
 
   [BridgeMethods.openURL]: async (p) => {

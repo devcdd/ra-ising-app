@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.9.1)
   - AsyncStorage (3.1.1):
     - boost
     - DoubleConversion
@@ -37,6 +38,29 @@ PODS:
   - hermes-engine (0.80.2):
     - hermes-engine/Pre-built (= 0.80.2)
   - hermes-engine/Pre-built (0.80.2)
+  - KakaoSDKAuth (2.22.0):
+    - KakaoSDKCommon (= 2.22.0)
+  - KakaoSDKCommon (2.22.0):
+    - KakaoSDKCommon/Common (= 2.22.0)
+    - KakaoSDKCommon/Network (= 2.22.0)
+  - KakaoSDKCommon/Common (2.22.0)
+  - KakaoSDKCommon/Network (2.22.0):
+    - Alamofire (~> 5.9.0)
+    - KakaoSDKCommon/Common (= 2.22.0)
+  - KakaoSDKFriend (2.22.0):
+    - KakaoSDKFriendCore (= 2.22.0)
+    - KakaoSDKUser (= 2.22.0)
+  - KakaoSDKFriendCore (2.22.0)
+  - KakaoSDKShare (2.22.0):
+    - KakaoSDKCommon (= 2.22.0)
+    - KakaoSDKTemplate (= 2.22.0)
+  - KakaoSDKTalk (2.22.0):
+    - KakaoSDKTemplate (= 2.22.0)
+    - KakaoSDKUser (= 2.22.0)
+  - KakaoSDKTemplate (2.22.0):
+    - KakaoSDKCommon/Common (= 2.22.0)
+  - KakaoSDKUser (2.22.0):
+    - KakaoSDKAuth (= 2.22.0)
   - lottie-ios (4.5.0)
   - lottie-react-native (7.3.4):
     - boost
@@ -1708,6 +1732,67 @@ PODS:
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
     - SocketRocket
+  - react-native-bottom-tabs (1.3.0):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - react-native-bottom-tabs/common (= 1.3.0)
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - SwiftUIIntrospect (~> 1.0)
+    - Yoga
+  - react-native-bottom-tabs/common (1.3.0):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - SwiftUIIntrospect (~> 1.0)
+    - Yoga
   - react-native-geolocation (3.4.0):
     - boost
     - DoubleConversion
@@ -2363,6 +2448,132 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
+  - RNCKakaoCore (2.4.5):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - KakaoSDKCommon (= 2.22.0)
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
+  - RNCKakaoShare (2.4.5):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - KakaoSDKShare (= 2.22.0)
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - RNCKakaoCore
+    - RNCKakaoSocial
+    - SocketRocket
+    - Yoga
+  - RNCKakaoSocial (2.4.5):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - KakaoSDKFriend (= 2.22.0)
+    - KakaoSDKTalk (= 2.22.0)
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - RNCKakaoCore
+    - RNCKakaoUser
+    - SocketRocket
+    - Yoga
+  - RNCKakaoUser (2.4.5):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - KakaoSDKUser (= 2.22.0)
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - RNCKakaoCore
+    - SocketRocket
+    - Yoga
   - RNReactNativeHapticFeedback (3.0.0):
     - boost
     - DoubleConversion
@@ -2392,7 +2603,67 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
+  - RNSVG (15.15.5):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - RNSVG/common (= 15.15.5)
+    - SocketRocket
+    - Yoga
+  - RNSVG/common (15.15.5):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
   - SocketRocket (0.7.1)
+  - SwiftUIIntrospect (1.3.0)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -2439,6 +2710,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
+  - react-native-bottom-tabs (from `../node_modules/react-native-bottom-tabs`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -2476,14 +2748,29 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
+  - "RNCKakaoCore (from `../node_modules/@react-native-kakao/core`)"
+  - "RNCKakaoShare (from `../node_modules/@react-native-kakao/share`)"
+  - "RNCKakaoSocial (from `../node_modules/@react-native-kakao/social`)"
+  - "RNCKakaoUser (from `../node_modules/@react-native-kakao/user`)"
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - SocketRocket (~> 0.7.1)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
+    - Alamofire
+    - KakaoSDKAuth
+    - KakaoSDKCommon
+    - KakaoSDKFriend
+    - KakaoSDKFriendCore
+    - KakaoSDKShare
+    - KakaoSDKTalk
+    - KakaoSDKTemplate
+    - KakaoSDKUser
     - lottie-ios
     - SocketRocket
+    - SwiftUIIntrospect
 
 EXTERNAL SOURCES:
   AsyncStorage:
@@ -2571,6 +2858,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   React-microtasksnativemodule:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
+  react-native-bottom-tabs:
+    :path: "../node_modules/react-native-bottom-tabs"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
   react-native-netinfo:
@@ -2645,12 +2934,23 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCClipboard:
     :path: "../node_modules/@react-native-clipboard/clipboard"
+  RNCKakaoCore:
+    :path: "../node_modules/@react-native-kakao/core"
+  RNCKakaoShare:
+    :path: "../node_modules/@react-native-kakao/share"
+  RNCKakaoSocial:
+    :path: "../node_modules/@react-native-kakao/social"
+  RNCKakaoUser:
+    :path: "../node_modules/@react-native-kakao/user"
   RNReactNativeHapticFeedback:
     :path: "../node_modules/react-native-haptic-feedback"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   AsyncStorage: cebb10d0b35901aa7147b67668123d8061aec1df
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
@@ -2659,6 +2959,14 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: bbc1152da7d2d40f9e59c28acc6576fcf5d28e2a
+  KakaoSDKAuth: 569b377eda622d93d4575240b8031cd658163eef
+  KakaoSDKCommon: d57127c339fc79e73aa8b236a4c77211c29924f1
+  KakaoSDKFriend: bfd6b017e31a448fa12b3254690a0dc209685d9f
+  KakaoSDKFriendCore: 15335ad820ec06940dbe5be7f920123826234d03
+  KakaoSDKShare: cbbe89685ad799709d467845dcc488c115629f5e
+  KakaoSDKTalk: cf2af6650bc7d77aa6cc8dab1bd464f4fda0618d
+  KakaoSDKTemplate: 2b518d4875fb9b3e832d39e957e4e33cb27a9d36
+  KakaoSDKUser: 043bcd7e91454ebf3bf64f150c430e6f65f0a08d
   lottie-ios: a881093fab623c467d3bce374367755c272bdd59
   lottie-react-native: 6468a436982358035db33aa6c27eb012e1bd6f1e
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
@@ -2694,6 +3002,7 @@ SPEC CHECKSUMS:
   React-logger: 7cfc7b1ae1f8e5fe5097f9c746137cc3a8fad4ce
   React-Mapbuffer: 7018c5b7da5b13ed22fe55dae51d50187a00b2d7
   React-microtasksnativemodule: 8ff9cb220a8efa625b5885996bd69e69db9edf02
+  react-native-bottom-tabs: ea6ca8f424e629bd2e4e17e036e8ca64e2cf4eab
   react-native-geolocation: f01ad4718ad1d015d0c0dd12a6f707354022530e
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
   react-native-safe-area-context: 027e36986c7b66946846cc5ab0d3631a5945aa70
@@ -2731,8 +3040,14 @@ SPEC CHECKSUMS:
   ReactCodegen: 439c427ccc115d71d16cc84256e5fbdc7fcef57a
   ReactCommon: 592ef441605638b95e533653259254b4bd35ff4f
   RNCClipboard: b228d492733d66e0126e18ce66c6d2f90bacc7e5
+  RNCKakaoCore: e55ac6dd6d0f4fbcc8a1ca07b7ac4a35a0e9b97e
+  RNCKakaoShare: fb74f59aaba8973eb5427f2a62c051b6644af1b7
+  RNCKakaoSocial: f3693e6d8d544011e8b54313978b979a58e4fbe7
+  RNCKakaoUser: aaa74b05310018893d1700ae6d5bff7a1b586f7f
   RNReactNativeHapticFeedback: 9421e083bd1cc799c35bb74feaf3b141111d5abf
+  RNSVG: 6c85ed4204fc8680c2f6fca3532277fd4f65e5ab
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
+  SwiftUIIntrospect: fee9aa07293ee280373a591e1824e8ddc869ba5d
   Yoga: a742cc68e8366fcfc681808162492bc0aa7a9498
 
 PODFILE CHECKSUM: 935a7d1183870375cb59bede2bbbc285f8b8dce4

@@ -41,5 +41,18 @@ target 'ra-ising-app' do
         build_configuration.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
       end
     end
+
+    # User Script Sandboxing (Xcode 15+) sandboxes the CocoaPods framework-copy
+    # phases, which use `rsync -a`. rsync's utimensat() is denied when copying
+    # XCFrameworks (e.g. KakaoSDKFriendCore) into DerivedData, breaking builds.
+    # Disable it on the Pods project so those copy scripts can run.
+    installer.pods_project.build_configurations.each do |build_configuration|
+      build_configuration.build_settings['ENABLE_USER_SCRIPT_SANDBOXING'] = 'NO'
+    end
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |build_configuration|
+        build_configuration.build_settings['ENABLE_USER_SCRIPT_SANDBOXING'] = 'NO'
+      end
+    end
   end
 end

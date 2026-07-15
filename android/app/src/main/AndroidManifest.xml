@@ -25,6 +25,13 @@
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+        <!-- OAuth 복귀용 커스텀 스킴 딥링크 (raisingapp://oauth/...) -->
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="raisingapp" android:host="oauth" />
+        </intent-filter>
       </activity>
     </application>
 </manifest>
