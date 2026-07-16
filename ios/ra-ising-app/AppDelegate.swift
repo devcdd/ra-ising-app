@@ -8,6 +8,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var reactNativeDelegate: ReactNativeDelegate?
   var reactNativeFactory: RCTReactNativeFactory?
 
+  // UIScene 전환 후에도 AppDelegate가 `window` 셀렉터에 응답하게 함.
+  // RCTDeviceInfo.mm의 interfaceOrientationDidChange가 application.delegate.window를
+  // 직접 참조하는데, window를 SceneDelegate로 옮기면서 AppDelegate엔 없어져
+  // doesNotRecognizeSelector로 크래시 나던 문제.
+  //
+  // @objc 필수: UIApplicationDelegate.window 요구사항은 { get set }이라
+  // 읽기 전용 computed property로는 요구사항을 충족하지 못해 @objc 자동 추론이 안 된다.
+  // 명시적 @objc가 없으면 -window 셀렉터가 ObjC 런타임에 노출되지 않아 크래시가 재발한다.
+  @objc var window: UIWindow? {
+    UIApplication.shared.connectedScenes
+      .compactMap { ($0 as? UIWindowScene)?.keyWindow }
+      .first
+  }
+
   func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
